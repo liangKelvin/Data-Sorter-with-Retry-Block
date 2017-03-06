@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <jni.h>
-#include "insertionSort.h"
+#include "InsertionSort.h" 
 
 JNIEXPORT jintArray JNICALL Java_InsertionSort_insertionSort (JNIEnv *env, jobject object, jintArray values) {
 	jintArray returnValues;
@@ -15,6 +15,8 @@ JNIEXPORT jintArray JNICALL Java_InsertionSort_insertionSort (JNIEnv *env, jobje
 
 	len = (*env)->GetArrayLength(env, values);
 	newValues = (jint *) (*env)->GetIntArrayElements(env, values, iscopy);
+	*mem_acc_count = 0;
+	printf("memBegin: %d\n", *mem_acc_count);
 	*mem_acc_count += 2;
 
 	int i;
@@ -31,7 +33,7 @@ JNIEXPORT jintArray JNICALL Java_InsertionSort_insertionSort (JNIEnv *env, jobje
 		newValues[pos] = value;
 		*mem_acc_count += 1;
 	}
-	
+	printf("mem: %d\n", *mem_acc_count);
 	jintArray result;
 	result = (*env)->NewIntArray(env, len+1);
 	(*env)->SetIntArrayRegion(env, result, 0, len, newValues);
